@@ -13,7 +13,15 @@ const bootProgress = document.querySelector("#boot-progress");
 const startedAt = Date.now();
 let manifestRunning = false;
 
-const bootStages = [
+const initialBootStages = [
+  [0, "INITIALIZING NODE"],
+  [24, "READING DEAD SIGNAL"],
+  [51, "SYNCING 1885 / −1974"],
+  [77, "SEARCHING SECOND WORLD"],
+  [94, "LISTENING"],
+];
+
+const manifestBootStages = [
   [0, "ACCESSING MANIFEST"],
   [24, "READING WORLD INDEX"],
   [51, "RESOLVING VECTOR"],
@@ -21,21 +29,21 @@ const bootStages = [
   [94, "UNSEALING"],
 ];
 
-function runManifestLoading() {
+function runLoadingSequence(stages, completedText) {
   return new Promise((resolve) => {
     let progress = 0;
     boot.hidden = false;
     boot.classList.remove("done");
     bootPercent.textContent = "000";
     bootProgress.style.width = "0%";
-    bootStage.textContent = bootStages[0][1];
+    bootStage.textContent = stages[0][1];
 
     function advance() {
       progress = Math.min(100, progress + 1 + Math.floor(Math.random() * 5));
       bootPercent.textContent = String(progress).padStart(3, "0");
       bootProgress.style.width = `${progress}%`;
 
-      const currentStage = [...bootStages].reverse().find(([threshold]) => progress >= threshold);
+      const currentStage = [...stages].reverse().find(([threshold]) => progress >= threshold);
       bootStage.textContent = currentStage[1];
 
       if (progress < 100) {
@@ -43,7 +51,7 @@ function runManifestLoading() {
         return;
       }
 
-      bootStage.textContent = "MANIFEST DECRYPTED";
+      bootStage.textContent = completedText;
       window.setTimeout(() => boot.classList.add("done"), 300);
       window.setTimeout(() => {
         boot.hidden = true;
@@ -53,6 +61,14 @@ function runManifestLoading() {
 
     window.setTimeout(advance, 180);
   });
+}
+
+function runManifestLoading() {
+  return runLoadingSequence(manifestBootStages, "MANIFEST DECRYPTED");
+}
+
+function runInitialLoading() {
+  return runLoadingSequence(initialBootStages, "LINK ESTABLISHED");
 }
 
 async function enterFullscreen() {
@@ -157,5 +173,6 @@ function mutateMetrics() {
 }
 
 updateTime();
+runInitialLoading().then(() => input.focus());
 window.setInterval(updateTime, 37);
 window.setInterval(mutateMetrics, 1100);
