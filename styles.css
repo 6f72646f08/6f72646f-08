@@ -113,6 +113,23 @@ body {
   overflow-wrap: anywhere;
 }
 
+.history .system-line,
+.history .dim-line,
+.history .warning-line {
+  animation: lineIn .28s ease-out both;
+  font-family: "Space Grotesk", sans-serif;
+  letter-spacing: .12em;
+}
+
+.history .system-line { color: #bb3d60; }
+.history .dim-line { color: rgba(166, 57, 88, .58); }
+.history .warning-line {
+  color: var(--bright-red);
+  text-shadow: 0 0 18px rgba(217, 74, 107, .48);
+}
+
+.terminal.awake { animation: manifestFlash 1.4s ease-out; }
+
 .apparatus {
   position: absolute;
   inset: 0;
@@ -242,6 +259,15 @@ input {
   0% { transform: scale(1.14) translate3d(-2%, -1%, 0); }
   100% { transform: scale(1.2) translate3d(2%, 2%, 0); }
 }
+@keyframes lineIn {
+  from { opacity: 0; transform: translateX(-9px); filter: blur(3px); }
+  to { opacity: 1; transform: translateX(0); filter: blur(0); }
+}
+@keyframes manifestFlash {
+  0%, 100% { border-color: rgba(143, 24, 56, .38); }
+  18% { border-color: rgba(217, 74, 107, .92); box-shadow: 0 0 90px rgba(217, 74, 107, .25), inset 0 0 90px rgba(143, 24, 56, .08); }
+  42% { border-color: rgba(143, 24, 56, .48); }
+}
 
 @media (max-width: 640px) {
   .terminal {
@@ -260,5 +286,9 @@ input {
   .orbit::before,
   .orbit::after,
   .pulse i,
-  .grain { animation: none; }
+  .grain,
+  .terminal.awake,
+  .history .system-line,
+  .history .dim-line,
+  .history .warning-line { animation: none; }
 }

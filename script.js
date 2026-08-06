@@ -7,6 +7,7 @@ const clock = document.querySelector("#clock");
 const elapsed = document.querySelector("#elapsed");
 const metricA = document.querySelector("#metric-a");
 const startedAt = Date.now();
+let manifestRunning = false;
 
 async function enterFullscreen() {
   if (document.fullscreenElement) return;
@@ -27,15 +28,54 @@ terminal.addEventListener("click", () => {
   input.focus();
 });
 
+function appendLine(text, className = "") {
+  const line = document.createElement("div");
+  line.textContent = text;
+  if (className) line.className = className;
+  history.appendChild(line);
+  screen.scrollTop = screen.scrollHeight;
+}
+
+function wait(delay) {
+  return new Promise((resolve) => window.setTimeout(resolve, delay));
+}
+
+async function revealManifest() {
+  if (manifestRunning) return;
+  manifestRunning = true;
+
+  terminal.classList.remove("awake");
+  void terminal.offsetWidth;
+  terminal.classList.add("awake");
+
+  const lines = [
+    ["// MANIFEST_1885", "system-line"],
+    ["VECTOR ........ 1885 / -1974", "system-line"],
+    ["SUBJECT ....... [UNRESOLVED]", "dim-line"],
+    ["SIGNAL ........ STILL INSIDE", "dim-line"],
+    ["ACCESS ........ OBSERVER", "warning-line"],
+  ];
+
+  for (const [text, className] of lines) {
+    await wait(180 + Math.random() * 240);
+    appendLine(text, className);
+  }
+
+  await wait(650);
+  terminal.classList.remove("awake");
+  manifestRunning = false;
+}
+
 form.addEventListener("submit", (event) => {
   event.preventDefault();
   const value = input.value.trim();
 
   if (value) {
-    const line = document.createElement("div");
-    line.textContent = `> ${value}`;
-    history.appendChild(line);
-    screen.scrollTop = screen.scrollHeight;
+    appendLine(`> ${value}`);
+  }
+
+  if (value.toLowerCase() === "manifest") {
+    revealManifest();
   }
 
   input.value = "";
