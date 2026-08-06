@@ -21,14 +21,6 @@ const initialBootStages = [
   [94, "LISTENING"],
 ];
 
-const manifestBootStages = [
-  [0, "ACCESSING MANIFEST"],
-  [24, "READING WORLD INDEX"],
-  [51, "RESOLVING VECTOR"],
-  [77, "SECOND WORLD DETECTED"],
-  [94, "UNSEALING"],
-];
-
 function runLoadingSequence(stages, completedText) {
   return new Promise((resolve) => {
     let progress = 0;
@@ -61,10 +53,6 @@ function runLoadingSequence(stages, completedText) {
 
     window.setTimeout(advance, 180);
   });
-}
-
-function runManifestLoading() {
-  return runLoadingSequence(manifestBootStages, "MANIFEST DECRYPTED");
 }
 
 function runInitialLoading() {
@@ -102,11 +90,67 @@ function wait(delay) {
   return new Promise((resolve) => window.setTimeout(resolve, delay));
 }
 
+async function runManifestConnection() {
+  const loader = document.createElement("div");
+  loader.className = "connection-loader";
+
+  const head = document.createElement("div");
+  head.className = "connection-head";
+
+  const status = document.createElement("span");
+  status.textContent = "CONNECTING";
+
+  const percentage = document.createElement("b");
+  percentage.textContent = "000%";
+
+  const track = document.createElement("div");
+  track.className = "connection-track";
+
+  const progressBar = document.createElement("i");
+  track.appendChild(progressBar);
+
+  const packets = document.createElement("code");
+  packets.className = "connection-packets";
+  packets.textContent = "00 00 00 00 00 00";
+
+  head.append(status, percentage);
+  loader.append(head, track, packets);
+  history.appendChild(loader);
+
+  const stages = [
+    [0, "CONNECTING"],
+    [28, "HANDSHAKE"],
+    [56, "READING WORLD INDEX"],
+    [82, "OPENING TUNNEL"],
+  ];
+
+  let progress = 0;
+  while (progress < 100) {
+    progress = Math.min(100, progress + 2 + Math.floor(Math.random() * 6));
+    const currentStage = [...stages].reverse().find(([threshold]) => progress >= threshold);
+    status.textContent = currentStage[1];
+    percentage.textContent = `${String(progress).padStart(3, "0")}%`;
+    progressBar.style.width = `${progress}%`;
+    packets.textContent = Array.from({ length: 6 }, () =>
+      Math.floor(Math.random() * 256).toString(16).padStart(2, "0").toUpperCase()
+    ).join(" ");
+    screen.scrollTop = screen.scrollHeight;
+    await wait(38 + Math.random() * 46);
+  }
+
+  status.textContent = "CONNECTED";
+  loader.classList.add("connected");
+  await wait(620);
+  loader.classList.add("complete");
+  await wait(320);
+  loader.remove();
+}
+
 async function revealManifest() {
   if (manifestRunning) return;
   manifestRunning = true;
 
-  await runManifestLoading();
+  await runManifestConnection();
 
   terminal.classList.remove("awake");
   void terminal.offsetWidth;
