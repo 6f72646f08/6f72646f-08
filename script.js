@@ -66,8 +66,7 @@ async function revealManifest() {
   manifestRunning = false;
 }
 
-form.addEventListener("submit", (event) => {
-  event.preventDefault();
+function runCommand() {
   const value = input.value.trim();
 
   if (value) {
@@ -79,6 +78,17 @@ form.addEventListener("submit", (event) => {
   }
 
   input.value = "";
+}
+
+form.addEventListener("submit", (event) => {
+  event.preventDefault();
+  runCommand();
+});
+
+input.addEventListener("keydown", (event) => {
+  if (event.key !== "Enter") return;
+  event.preventDefault();
+  runCommand();
 });
 
 function pad(value, size = 2) {
