@@ -6,7 +6,6 @@ const history = document.querySelector("#history");
 const clock = document.querySelector("#clock");
 const elapsed = document.querySelector("#elapsed");
 const metricA = document.querySelector("#metric-a");
-const metricB = document.querySelector("#metric-b");
 const startedAt = Date.now();
 
 async function enterFullscreen() {
@@ -59,7 +58,6 @@ function updateTime() {
 
 function mutateMetrics() {
   metricA.textContent = `${(Math.random() * .009).toFixed(4)} / ${(70 + Math.random() * 19).toFixed(2)}`;
-  metricB.textContent = Array.from({ length: 4 }, () => Math.floor(11 + Math.random() * 88)).join("·");
 }
 
 updateTime();
