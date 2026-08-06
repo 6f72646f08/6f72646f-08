@@ -14,38 +14,45 @@ const startedAt = Date.now();
 let manifestRunning = false;
 
 const bootStages = [
-  [0, "INITIALIZING NODE"],
-  [24, "READING DEAD SIGNAL"],
-  [51, "SYNCING 1885 / −1974"],
-  [77, "SEARCHING SECOND WORLD"],
-  [94, "LISTENING"],
+  [0, "ACCESSING MANIFEST"],
+  [24, "READING WORLD INDEX"],
+  [51, "RESOLVING VECTOR"],
+  [77, "SECOND WORLD DETECTED"],
+  [94, "UNSEALING"],
 ];
 
-function runBootSequence() {
-  let progress = 0;
+function runManifestLoading() {
+  return new Promise((resolve) => {
+    let progress = 0;
+    boot.hidden = false;
+    boot.classList.remove("done");
+    bootPercent.textContent = "000";
+    bootProgress.style.width = "0%";
+    bootStage.textContent = bootStages[0][1];
 
-  function advance() {
-    progress = Math.min(100, progress + 1 + Math.floor(Math.random() * 5));
-    bootPercent.textContent = String(progress).padStart(3, "0");
-    bootProgress.style.width = `${progress}%`;
+    function advance() {
+      progress = Math.min(100, progress + 1 + Math.floor(Math.random() * 5));
+      bootPercent.textContent = String(progress).padStart(3, "0");
+      bootProgress.style.width = `${progress}%`;
 
-    const currentStage = [...bootStages].reverse().find(([threshold]) => progress >= threshold);
-    bootStage.textContent = currentStage[1];
+      const currentStage = [...bootStages].reverse().find(([threshold]) => progress >= threshold);
+      bootStage.textContent = currentStage[1];
 
-    if (progress < 100) {
-      window.setTimeout(advance, 38 + Math.random() * 72);
-      return;
+      if (progress < 100) {
+        window.setTimeout(advance, 32 + Math.random() * 58);
+        return;
+      }
+
+      bootStage.textContent = "MANIFEST DECRYPTED";
+      window.setTimeout(() => boot.classList.add("done"), 300);
+      window.setTimeout(() => {
+        boot.hidden = true;
+        resolve();
+      }, 1050);
     }
 
-    bootStage.textContent = "LINK ESTABLISHED";
-    window.setTimeout(() => boot.classList.add("done"), 420);
-    window.setTimeout(() => {
-      boot.hidden = true;
-      input.focus();
-    }, 1250);
-  }
-
-  window.setTimeout(advance, 280);
+    window.setTimeout(advance, 180);
+  });
 }
 
 async function enterFullscreen() {
@@ -83,6 +90,8 @@ async function revealManifest() {
   if (manifestRunning) return;
   manifestRunning = true;
 
+  await runManifestLoading();
+
   terminal.classList.remove("awake");
   void terminal.offsetWidth;
   terminal.classList.add("awake");
@@ -100,6 +109,7 @@ async function revealManifest() {
   await wait(650);
   terminal.classList.remove("awake");
   manifestRunning = false;
+  input.focus();
 }
 
 function runCommand() {
@@ -147,6 +157,5 @@ function mutateMetrics() {
 }
 
 updateTime();
-runBootSequence();
 window.setInterval(updateTime, 37);
 window.setInterval(mutateMetrics, 1100);
