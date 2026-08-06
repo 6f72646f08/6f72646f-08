@@ -49,11 +49,8 @@ async function revealManifest() {
   terminal.classList.add("awake");
 
   const lines = [
-    ["// MANIFEST_1885", "system-line"],
-    ["VECTOR ........ 1885 / -1974", "system-line"],
-    ["SUBJECT ....... [UNRESOLVED]", "dim-line"],
-    ["SIGNAL ........ STILL INSIDE", "dim-line"],
-    ["ACCESS ........ OBSERVER", "warning-line"],
+    ["СУЩЕСТВУЕТ НЕ ТОЛЬКО 1 МИР", "warning-line"],
+    ["-1824 / -1015", "coordinate-line"],
   ];
 
   for (const [text, className] of lines) {

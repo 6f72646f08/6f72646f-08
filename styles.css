@@ -115,7 +115,8 @@ body {
 
 .history .system-line,
 .history .dim-line,
-.history .warning-line {
+.history .warning-line,
+.history .coordinate-line {
   animation: lineIn .28s ease-out both;
   font-family: "Space Grotesk", sans-serif;
   letter-spacing: .12em;
@@ -125,7 +126,17 @@ body {
 .history .dim-line { color: rgba(166, 57, 88, .58); }
 .history .warning-line {
   color: var(--bright-red);
+  margin-top: 14px;
+  font-size: clamp(14px, 2vw, 18px);
   text-shadow: 0 0 18px rgba(217, 74, 107, .48);
+}
+.history .coordinate-line {
+  margin-top: 12px;
+  color: #f06d8c;
+  font-size: clamp(20px, 3vw, 30px);
+  font-weight: 300;
+  letter-spacing: .18em;
+  text-shadow: 0 0 24px rgba(217, 74, 107, .4);
 }
 
 .terminal.awake { animation: manifestFlash 1.4s ease-out; }
@@ -290,5 +301,6 @@ input {
   .terminal.awake,
   .history .system-line,
   .history .dim-line,
-  .history .warning-line { animation: none; }
+  .history .warning-line,
+  .history .coordinate-line { animation: none; }
 }
