@@ -4,6 +4,6 @@
   "start_url": "./",
   "scope": "./",
   "display": "fullscreen",
-  "background_color": "#030000",
-  "theme_color": "#030000"
+  "background_color": "#080307",
+  "theme_color": "#080307"
 }
