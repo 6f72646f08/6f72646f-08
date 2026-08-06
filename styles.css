@@ -91,6 +91,83 @@ body {
   box-shadow: 0 0 16px rgba(217, 74, 107, .52);
 }
 
+.boot {
+  position: absolute;
+  z-index: 20;
+  inset: 31px 0 0;
+  display: grid;
+  place-items: center;
+  padding: 32px;
+  background:
+    radial-gradient(circle at 50% 47%, rgba(143, 24, 56, .12), transparent 38%),
+    rgba(7, 2, 6, .96);
+  transition: opacity .7s ease, filter .7s ease, transform .7s ease;
+}
+
+.boot.done {
+  opacity: 0;
+  filter: blur(12px);
+  transform: scale(1.025);
+  pointer-events: none;
+}
+
+.boot[hidden] { display: none; }
+
+.boot-core {
+  width: min(440px, 100%);
+  display: grid;
+  gap: 18px;
+}
+
+.boot-core > span {
+  color: rgba(217, 74, 107, .62);
+  font: 300 10px/1 "Space Grotesk", sans-serif;
+  letter-spacing: .22em;
+}
+
+.boot strong {
+  color: var(--bright-red);
+  font: 300 clamp(74px, 13vw, 130px)/.78 "Space Grotesk", sans-serif;
+  letter-spacing: -.07em;
+  text-shadow: 0 0 42px rgba(217, 74, 107, .18);
+}
+
+.boot-track {
+  position: relative;
+  height: 1px;
+  overflow: visible;
+  background: rgba(143, 24, 56, .2);
+}
+
+.boot-track i {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 0;
+  background: var(--bright-red);
+  box-shadow: 0 0 14px rgba(217, 74, 107, .7);
+  transition: width .12s ease-out;
+}
+
+.boot-track i::after {
+  content: "";
+  position: absolute;
+  top: -3px;
+  right: 0;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #ef7390;
+  box-shadow: 0 0 18px rgba(239, 115, 144, .9);
+}
+
+.boot-codes {
+  display: flex;
+  justify-content: space-between;
+  color: rgba(143, 60, 84, .52);
+  font: 300 9px/1 "Space Grotesk", sans-serif;
+  letter-spacing: .15em;
+}
+
 .screen {
   position: relative;
   height: calc(100% - 86px);
@@ -311,6 +388,7 @@ input {
     white-space: nowrap;
   }
   .orbit { opacity: .65; }
+  .boot { padding: 24px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

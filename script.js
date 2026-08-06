@@ -6,8 +6,47 @@ const history = document.querySelector("#history");
 const clock = document.querySelector("#clock");
 const elapsed = document.querySelector("#elapsed");
 const metricA = document.querySelector("#metric-a");
+const boot = document.querySelector("#boot");
+const bootStage = document.querySelector("#boot-stage");
+const bootPercent = document.querySelector("#boot-percent");
+const bootProgress = document.querySelector("#boot-progress");
 const startedAt = Date.now();
 let manifestRunning = false;
+
+const bootStages = [
+  [0, "INITIALIZING NODE"],
+  [24, "READING DEAD SIGNAL"],
+  [51, "SYNCING 1885 / −1974"],
+  [77, "SEARCHING SECOND WORLD"],
+  [94, "LISTENING"],
+];
+
+function runBootSequence() {
+  let progress = 0;
+
+  function advance() {
+    progress = Math.min(100, progress + 1 + Math.floor(Math.random() * 5));
+    bootPercent.textContent = String(progress).padStart(3, "0");
+    bootProgress.style.width = `${progress}%`;
+
+    const currentStage = [...bootStages].reverse().find(([threshold]) => progress >= threshold);
+    bootStage.textContent = currentStage[1];
+
+    if (progress < 100) {
+      window.setTimeout(advance, 38 + Math.random() * 72);
+      return;
+    }
+
+    bootStage.textContent = "LINK ESTABLISHED";
+    window.setTimeout(() => boot.classList.add("done"), 420);
+    window.setTimeout(() => {
+      boot.hidden = true;
+      input.focus();
+    }, 1250);
+  }
+
+  window.setTimeout(advance, 280);
+}
 
 async function enterFullscreen() {
   if (document.fullscreenElement) return;
@@ -108,5 +147,6 @@ function mutateMetrics() {
 }
 
 updateTime();
+runBootSequence();
 window.setInterval(updateTime, 37);
 window.setInterval(mutateMetrics, 1100);

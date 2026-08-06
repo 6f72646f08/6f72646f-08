@@ -13,7 +13,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Space+Grotesk:wght@300;400&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="styles.css?v=20260807-4" />
+    <link rel="stylesheet" href="styles.css?v=20260807-5" />
   </head>
   <body>
     <div class="grain" aria-hidden="true"></div>
@@ -21,6 +21,16 @@
       <div class="terminal-bar" aria-hidden="true">
         <i></i><i></i><i></i>
         <time id="clock">--:--:--</time>
+      </div>
+      <div class="boot" id="boot" aria-live="polite">
+        <div class="boot-core">
+          <span id="boot-stage">INITIALIZING NODE</span>
+          <strong id="boot-percent">000</strong>
+          <div class="boot-track"><i id="boot-progress"></i></div>
+          <div class="boot-codes" aria-hidden="true">
+            <span>18.85</span><span>−19.74</span><span>01/∞</span>
+          </div>
+        </div>
       </div>
       <div class="screen" id="screen" aria-live="polite">
         <div class="apparatus" aria-hidden="true">
@@ -39,6 +49,6 @@
         <input id="terminal-input" type="text" autofocus spellcheck="false" aria-label="Командная строка" />
       </form>
     </main>
-    <script src="script.js?v=20260807-3"></script>
+    <script src="script.js?v=20260807-5"></script>
   </body>
 </html>
