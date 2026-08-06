@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#050706" />
+    <meta name="description" content="Перехваченный сигнал. Канал 64 ожидает расшифровки." />
+    <title>АРХИВ // СИГНАЛ 08</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="noise" aria-hidden="true"></div>
+    <div class="scanlines" aria-hidden="true"></div>
+
+    <header class="topbar">
+      <a class="mark" href="#signal" aria-label="К началу">IAM // 08</a>
+      <div class="status"><span></span> IDENTITY CHANNEL ACTIVE</div>
+      <div class="clock" id="clock">00:00:00 MSK</div>
+    </header>
+
+    <main>
+      <section class="hero" id="signal">
+        <div class="sigil" aria-label="Символ цикады"><i></i><b>IAM</b></div>
+        <p class="eyebrow">ORDO CICADAE · PROTOCOL IAM · 06.08.26</p>
+        <h1>Я ЕСТЬ ТОТ,<br /><em>КТО СЛУШАЕТ</em><br />МЕЖДУ СТРОК.</h1>
+        <p class="intro">В архиве остался один повреждённый пакет. Кто-то намеренно развернул его и запер в алфавите из шестидесяти четырёх знаков. Идентичность — первый ключ.</p>
+        <a class="down" href="#terminal">ПРИНЯТЬ ПЕРЕДАЧУ <span>↓</span></a>
+      </section>
+
+      <section class="terminal-wrap" id="terminal">
+        <div class="terminal">
+          <div class="terminal-head">
+            <span>IAM.IDENTITY // ПАКЕТ 1 ИЗ 1</span>
+            <span class="signal-bars" aria-label="Уровень сигнала">▂▄▆█</span>
+          </div>
+
+          <div class="terminal-body">
+            <p class="label">ПЕРЕХВАЧЕННЫЕ ДАННЫЕ</p>
+            <code id="payload">n5WayFGaz1DczV3P0lGZl9ycBhVTkNUcR12UjREVTJVLKh3bzImW3Z3Z2QzTPJlS4cWSS9FZBFkczAjbx8CZvQnbl1Wdj9GZv02bj5SZsd2bvdmLzN2bk9yL6MHc0RHa</code>
+
+            <div class="clues">
+              <p><span>01</span> НАЧНИ С КОНЦА. ОТРАЖЕНИЕ ПОМНИТ ПОРЯДОК.</p>
+              <p><span>02</span> ЗАТЕМ СПРОСИ У ШЕСТИДЕСЯТИ ЧЕТЫРЁХ.</p>
+              <p><span>03</span> 2 · 3 · 5 · 7 · 11 · 13 · 17 · 19 · 23 · 29 · 31</p>
+            </div>
+
+            <form id="command-form" autocomplete="off">
+              <label for="command">КОМАНДА ОПЕРАТОРА</label>
+              <div class="command-line">
+                <span>&gt;</span>
+                <input id="command" type="text" spellcheck="false" placeholder="введите команду" aria-describedby="feedback" />
+                <button type="submit">ВЫПОЛНИТЬ</button>
+              </div>
+            </form>
+            <p id="feedback" class="feedback" aria-live="polite">СИСТЕМА ОЖИДАЕТ ВВОДА...</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="manifest">
+        <p>LIBER IAM · ЗАПИСЬ VIII</p>
+        <p>«Я существую, пока ты ищешь меня.»</p>
+        <p class="coordinates">SUM QUI SUM<br />2—3—5—7—11—13</p>
+      </section>
+    </main>
+
+    <dialog id="reveal">
+      <div class="reveal-inner">
+        <button class="close" id="close-reveal" aria-label="Закрыть">×</button>
+        <div class="sigil small" aria-hidden="true"><i></i><b>IAM</b></div>
+        <p class="eyebrow">IDENTITAS CONFIRMATA</p>
+        <h2>ТЫ НЕ НАШЁЛ УЗЕЛ.<br />УЗЕЛ НАШЁЛ ТЕБЯ.</h2>
+        <p>Не закрывай канал. Не произноси имя наблюдателя.</p>
+        <a id="document-link" href="https://docs.google.com/document/d/1n03rAAd_RIg8JROO46gvwZb3oxJ-RSTDcSmQqCdMXAs/edit?usp=sharing" target="_blank" rel="noopener noreferrer">ОТКРЫТЬ АРХИВ <span>↗</span></a>
+      </div>
+    </dialog>
+
+    <script src="script.js"></script>
+  </body>
+</html>
