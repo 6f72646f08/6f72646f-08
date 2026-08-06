@@ -1,0 +1,9 @@
+{
+  "name": "_",
+  "short_name": "_",
+  "start_url": "./",
+  "scope": "./",
+  "display": "fullscreen",
+  "background_color": "#030000",
+  "theme_color": "#030000"
+}

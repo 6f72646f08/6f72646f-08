@@ -3,7 +3,24 @@ const form = document.querySelector("#terminal-form");
 const input = document.querySelector("#terminal-input");
 const screen = document.querySelector("#screen");
 
-terminal.addEventListener("click", () => input.focus());
+async function enterFullscreen() {
+  if (document.fullscreenElement) return;
+
+  try {
+    if (document.documentElement.requestFullscreen) {
+      await document.documentElement.requestFullscreen({ navigationUI: "hide" });
+    } else if (document.documentElement.webkitRequestFullscreen) {
+      document.documentElement.webkitRequestFullscreen();
+    }
+  } catch {
+    // Some browsers only allow fullscreen for installed web apps.
+  }
+}
+
+terminal.addEventListener("click", () => {
+  enterFullscreen();
+  input.focus();
+});
 
 form.addEventListener("submit", (event) => {
   event.preventDefault();
