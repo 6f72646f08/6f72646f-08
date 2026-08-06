@@ -10,8 +10,10 @@ const boot = document.querySelector("#boot");
 const bootStage = document.querySelector("#boot-stage");
 const bootPercent = document.querySelector("#boot-percent");
 const bootProgress = document.querySelector("#boot-progress");
+const watcher = document.querySelector("#watcher");
 const startedAt = Date.now();
 let manifestRunning = false;
+let watcherRunning = false;
 
 const initialBootStages = [
   [0, "INITIALIZING NODE"],
@@ -88,6 +90,21 @@ function appendLine(text, className = "") {
 
 function wait(delay) {
   return new Promise((resolve) => window.setTimeout(resolve, delay));
+}
+
+async function runWatcherSequence() {
+  if (watcherRunning) return;
+  watcherRunning = true;
+  watcher.hidden = false;
+  watcher.classList.remove("active");
+  void watcher.offsetWidth;
+  watcher.classList.add("active");
+
+  await wait(4400);
+  watcher.classList.remove("active");
+  watcher.hidden = true;
+  watcherRunning = false;
+  input.focus();
 }
 
 async function runManifestConnection() {
@@ -179,8 +196,12 @@ function runCommand() {
     appendLine(`> ${value}`);
   }
 
-  if (value.toLowerCase() === "manifest") {
+  const commandKey = value.toLowerCase();
+
+  if (commandKey === "manifest") {
     revealManifest();
+  } else if (commandKey === "theyseeyou") {
+    runWatcherSequence();
   }
 
   input.value = "";
