@@ -12,7 +12,7 @@
     <link rel="manifest" href="manifest.webmanifest" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Space+Grotesk:wght@300;400&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
@@ -20,8 +20,20 @@
     <main class="terminal" id="terminal">
       <div class="terminal-bar" aria-hidden="true">
         <i></i><i></i><i></i>
+        <time id="clock">--:--:--</time>
       </div>
-      <div class="screen" id="screen" aria-live="polite"></div>
+      <div class="screen" id="screen" aria-live="polite">
+        <div class="apparatus" aria-hidden="true">
+          <div class="orbit"><span></span><span></span><span></span></div>
+          <div class="pulse"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          <div class="telemetry">
+            <b id="elapsed">000:00:00</b>
+            <span id="metric-a">0.0031 / 77.04</span>
+            <span id="metric-b">11·23·47·83</span>
+          </div>
+        </div>
+        <div class="history" id="history"></div>
+      </div>
       <form id="terminal-form" autocomplete="off">
         <label for="terminal-input" aria-label="Терминал">&gt;</label>
         <input id="terminal-input" type="text" autofocus spellcheck="false" aria-label="Командная строка" />
